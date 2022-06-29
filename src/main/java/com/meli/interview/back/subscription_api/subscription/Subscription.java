@@ -3,22 +3,27 @@ package com.meli.interview.back.subscription_api.subscription;
 public class Subscription {
     private String partner;
 
-    public float getPrice() {
+    /**
+     * devuelve el precio correspondiente a la subscription
+     * @return
+     * @throws IllegalArgumentException
+     */
+    public float getPrice() throws IllegalArgumentException {
+        if (partner == null) throw new IllegalArgumentException("Subscription nula");
         float price = 0;
-        if (partner.equals("disney")) {
+        switch(partner) {
+            case "disney":
             price = 100;
-        }
-
-        if (partner.equals("netflix")) {
+            break;
+            case "netflix":
             price = 200;
-        }
-
-        if (partner.equals("spotify")) {
+            break;
+            case "spotify":
             price = 50;
-        } else {
-            price = 0;
+            break;
+            default:
+            throw new IllegalArgumentException("Subscription no reconocida");
         }
-
         return price;
      }
 }

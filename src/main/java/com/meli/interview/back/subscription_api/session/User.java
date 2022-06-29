@@ -5,9 +5,14 @@ import com.meli.interview.back.subscription_api.subscription.Subscription;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
-    private String id;
+    private @Id @GeneratedValue Long id; 
     private String name;
 
     private List<Subscription> subscriptions = new ArrayList<Subscription>();
@@ -29,11 +34,11 @@ public class User {
         return subscriptions;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

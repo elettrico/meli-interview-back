@@ -6,6 +6,9 @@ import com.meli.interview.back.subscription_api.session.UserSession;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class SubscriptionService {
 
     /**
@@ -22,22 +25,14 @@ public class SubscriptionService {
         User loggedUser = UserSession.getInstance().getLoggedUser();
         boolean isFriend = false;
         if (loggedUser != null) {
-            for (User friend : user.getFriends()) {
-                if (friend == loggedUser) {
-                    isFriend = true;
-                    break;
-                }
-            }
+            float totalPrice = 0;
+            isFriend = (user.getFriends() != null && user.getFriends().contains(loggedUser));
             if (isFriend) {
                 subscriptionList = SubscriptionDAO.findSubscriptionByUser(user);
+                for (Subscription subscription : subscriptionList) {
+                    totalPrice += subscription.getPrice();
+                }
             }
-
-            float totalPrice = 0;
-
-            for (Subscription subscription : subscriptionList) {
-                totalPrice += subscription.getPrice();
-            }
-
             return totalPrice;
         } else {
             throw new UserNotLoggedInException();
